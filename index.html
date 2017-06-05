@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+			canvas{
+				border: solid 1px red;
+			}
+			img{
+				display: none;
+			}
+        </style>
+    </head>
+    <body>
+    <canvas id="cvs" width="500" height="500"></canvas>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/bird.js"></script>
+    <script type="text/javascript" src="js/pipe.js"></script>
+    <script type="text/javascript" src="js/sky.js"></script>
+    <script type="text/javascript" src="js/land.js"></script>
+    <script type="text/javascript" src="js/text.js"></script>
+    <script type="text/javascript" src="js/gameScene.js"></script>
+    <script type="text/javascript" src="js/overScene.js"></script>
+    
+    <script>
+    var cvs=document.getElementById("cvs");
+    var ctx=cvs.getContext("2d");
+    util.loadImg({sky:"img/sky.png",
+			land:"img/land.png",
+			pipeUp:"img/pipeUp.png",
+			pipeDown:"img/pipeDown.png",
+			bird:"img/bird.png"
+		},function(imgObj){
+		cvs.width=imgObj.sky.width;
+		cvs.height=imgObj.sky.height;
+		var isRun=true;
+		var gameScene=getScene(ctx,imgObj);
+		var overScene=getOverScene(ctx);
+		var i=0;
+		gameScene.addListener(function(){
+			isRun=false;
+			overScene.draw();
+		});
+		//游戏场景
+		var timer=setInterval(function(){
+			if(isRun){
+				obj.time++;	
+			}else{
+				clearInterval(timer);
+			}
+		}, 1000);
+		(function run(){
+			gameScene.draw();
+			if(isRun){
+				requestAnimationFrame(run);
+			}		
+			}());
+		
+    	})
+
+    </script>
+    </body>
+</html>
